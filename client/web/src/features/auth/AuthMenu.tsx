@@ -8,6 +8,7 @@ export function AuthMenu(props: Partial<GroupProps>) {
     <Group {...props}>
       <Text size="sm">Signed in as:</Text>
       <Select
+        id="userSelect"
         clearable={false}
         allowDeselect={false}
         data={["customer-1", "customer-2", "customer-3"]}
