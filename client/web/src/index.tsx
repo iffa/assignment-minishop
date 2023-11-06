@@ -3,8 +3,8 @@ import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Orders } from "./Orders";
-import { Store } from "./Store";
+import { Orders } from "./features/order/Orders";
+import { Store } from "./features/store/Store";
 
 const gqlClient = new ApolloClient({
   uri: "http://localhost:4000",
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     element: <Store />,
   },
   {
-    path: "orders/",
+    path: "/orders",
     element: <Orders />,
   },
 ]);

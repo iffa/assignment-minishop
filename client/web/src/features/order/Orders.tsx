@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
-import { gql } from "../../generated";
-import { Order } from "../../generated/graphql";
+import { gql } from "../../../../generated";
+import { OrderSummary } from "./OrderSummary";
 
 const ordersQuery = gql(`
   query getOrders($customerId: ID!) {
@@ -39,30 +39,5 @@ export function Orders() {
         ))
       )}
     </>
-  );
-}
-
-type OrderSummaryProps = Pick<Order, "timestamp" | "totalSum">;
-
-function OrderSummary(props: OrderSummaryProps) {
-  // Show human readable presentation of order timestamp in summary
-  const timestamp = new Intl.DateTimeFormat([], {
-    timeStyle: "short",
-    dateStyle: "medium",
-  }).format(Date.parse(props.timestamp));
-
-  // Show human readable presentation of order total sum in summary
-  const totalSum = new Intl.NumberFormat([], {
-    style: "currency",
-    currency: "EUR",
-    currencyDisplay: "",
-  }).format(props.totalSum);
-
-  return (
-    <div>
-      <h3>Order</h3>
-      <p>Order time: {timestamp}</p>
-      <p>Total: {totalSum}</p>
-    </div>
   );
 }
