@@ -4,6 +4,7 @@ import { readFileSync } from "fs";
 
 // Since we're using ES Modules, .js extension needs to be added to imports
 import { Resolvers } from "./generated/graphql.js";
+import { mutations } from "./mutations.js";
 import { queries } from "./queries.js";
 
 const typeDefs = readFileSync("../schema/schema.graphql", {
@@ -13,6 +14,7 @@ const typeDefs = readFileSync("../schema/schema.graphql", {
 // Resolvers define how to fetch the types defined in your schema.
 const resolvers: Resolvers = {
   Query: queries,
+  Mutation: mutations,
 };
 
 // The ApolloServer constructor requires two parameters: your schema
@@ -28,7 +30,6 @@ const server = new ApolloServer({
 //  3. prepares your app to handle incoming requests
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 },
-  context: () => Promise.resolve({}),
 });
 
 console.log(`🚀  Server ready at: ${url}`);

@@ -10,7 +10,12 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended-type-checked",
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs", "vite.config.ts"],
+  ignorePatterns: [
+    "dist",
+    ".eslintrc.cjs",
+    "vite.config.ts",
+    "postcss.config.cjs",
+  ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: true,

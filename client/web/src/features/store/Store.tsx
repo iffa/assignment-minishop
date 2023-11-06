@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { Link } from "react-router-dom";
+import { SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import { gql } from "../../../../generated";
 import { ProductCard } from "./ProductCard";
 
@@ -9,6 +9,7 @@ const getProductsQuery = gql(`
       ean
       name
       price
+      imageUrl
     }
   }
 `);
@@ -18,25 +19,28 @@ export function Store() {
 
   const displayData = () => {
     if (!data) {
-      return <p>No Products</p>;
+      return <Text>No products available.</Text>;
     }
 
-    return data.products.map((product) => (
-      <ProductCard
-        key={product.ean}
-        name={product.name}
-        ean={product.ean}
-        price={product.price}
-      />
-    ));
+    return (
+      <SimpleGrid cols={{ base: 1, sm: 2, md: 4 }}>
+        {data.products.map((product) => (
+          <ProductCard
+            key={product.ean}
+            name={product.name}
+            ean={product.ean}
+            price={product.price}
+            imageUrl={product.imageUrl}
+          />
+        ))}
+      </SimpleGrid>
+    );
   };
 
   return (
-    <>
-      <h1>Minishop</h1>
-      <Link to="/orders">My orders</Link>
-      <h2>Available products</h2>
-      {loading ? <p>Loading products...</p> : displayData()}
-    </>
+    <Stack gap="lg">
+      <Title order={2}>Available products</Title>
+      {loading ? <Text>Loading products...</Text> : displayData()}
+    </Stack>
   );
 }

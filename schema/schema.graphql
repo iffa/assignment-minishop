@@ -19,8 +19,17 @@ type Order {
   totalSum: Float!
 }
 
+input CreateOrderProduct {
+  ean: ID!
+  amount: Int!
+}
+
 type Query {
   products: [Product!]!
   orders(customerId: ID!): [Order!]!
   order(customerId: ID!, orderId: ID!): Order
+}
+
+type Mutation {
+  createOrder(customerId: ID!, products: [CreateOrderProduct!]!): Order!
 }

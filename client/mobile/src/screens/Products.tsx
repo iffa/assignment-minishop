@@ -1,8 +1,8 @@
 import type { GetProductsQuery } from '../../../generated/graphql';
 
+import { gql, useQuery } from '@apollo/client';
 import React from 'react';
 import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { gql, useQuery } from '@apollo/client';
 
 import Header from '../components/Header';
 import ProductCard from '../components/ProductCard';
@@ -13,6 +13,7 @@ const getProductsQuery = gql(`
       ean
       name
       price
+      imageUrl
     }
   }
 `);

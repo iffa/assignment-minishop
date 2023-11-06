@@ -1,9 +1,14 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
+import { MantineProvider } from "@mantine/core";
+import "@mantine/core/styles.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Orders } from "./features/order/Orders";
+import { Layout } from "./Layout";
+import { AuthProvider } from "./features/auth/AuthContext";
+import { OrderDetails } from "./features/order-details/OrderDetails";
+import { Orders } from "./features/order-summary/Orders";
 import { Store } from "./features/store/Store";
 
 const gqlClient = new ApolloClient({
@@ -16,18 +21,32 @@ loadErrorMessages();
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Store />,
-  },
-  {
-    path: "/orders",
-    element: <Orders />,
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Store />,
+      },
+      {
+        path: "/orders",
+        element: <Orders />,
+      },
+      {
+        path: "/orders/:orderId",
+        element: <OrderDetails />,
+      },
+    ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ApolloProvider client={gqlClient}>
-      <RouterProvider router={router} />
-    </ApolloProvider>
+    <AuthProvider>
+      <ApolloProvider client={gqlClient}>
+        <MantineProvider>
+          <RouterProvider router={router} />
+        </MantineProvider>
+      </ApolloProvider>
+    </AuthProvider>
   </React.StrictMode>
 );

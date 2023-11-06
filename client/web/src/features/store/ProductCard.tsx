@@ -1,7 +1,11 @@
+import { Button, Card, Group, Image, Text, Title } from "@mantine/core";
+
 type ProductCardProps = {
   name: string;
   ean: string;
   price: number;
+  imageUrl: string;
+  readOnly?: boolean;
 };
 
 export function ProductCard(props: ProductCardProps) {
@@ -12,10 +16,23 @@ export function ProductCard(props: ProductCardProps) {
   }).format(props.price);
 
   return (
-    <div>
-      <h3>{props.name}</h3>
-      <p>EAN: {props.ean}</p>
-      <p>Price: {price}</p>
-    </div>
+    <Card withBorder>
+      <Card.Section withBorder>
+        <Image
+          alt="Product image"
+          src={props.imageUrl}
+          height={160}
+          fit="contain"
+        />
+      </Card.Section>
+      <Card.Section inheritPadding py="md">
+        <Group justify="space-between">
+          <Title order={3}>{props.name}</Title>
+          {!props.readOnly && <Button size="compact-sm">Add to cart</Button>}
+        </Group>
+      </Card.Section>
+      <Text>EAN: {props.ean}</Text>
+      <Text>Price: {price}</Text>
+    </Card>
   );
 }

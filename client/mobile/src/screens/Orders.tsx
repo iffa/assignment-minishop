@@ -15,6 +15,7 @@ const ordersQuery = gql(`
       products {
         amount
         ean
+        price
       }
       totalSum
     }
