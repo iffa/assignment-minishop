@@ -1,3 +1,1 @@
-export interface Context {
-  username: string | undefined;
-}
+export type Context = null;

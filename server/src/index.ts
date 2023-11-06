@@ -28,13 +28,7 @@ const server = new ApolloServer({
 //  3. prepares your app to handle incoming requests
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 },
-  context: ({ req }) =>
-    Promise.resolve({
-      // We should perform actual authentication, but
-      // let's assume we can trust the client to give their username
-      // Add username to context so that query resolvers can use username for request handling
-      username: req.headersDistinct.authorization?.at(0),
-    }),
+  context: () => Promise.resolve({}),
 });
 
 console.log(`🚀  Server ready at: ${url}`);

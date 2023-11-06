@@ -1,8 +1,8 @@
 import type { GetOrdersQuery } from '../../../generated/graphql';
 
+import { gql, useQuery } from '@apollo/client';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { gql, useQuery } from '@apollo/client';
 
 import Header from '../components/Header';
 
@@ -22,7 +22,7 @@ const ordersQuery = gql(`
 
 const Orders = () => {
   const { loading, data } = useQuery<GetOrdersQuery>(ordersQuery, {
-    variables: { customerId: 'user-1' },
+    variables: { customerId: 'customer-1' },
   });
 
   return (

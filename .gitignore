@@ -199,3 +199,5 @@ client/mobile/vendor/bundle/
 
 # testing
 /coverage
+
+**/generated**

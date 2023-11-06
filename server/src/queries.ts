@@ -3,27 +3,23 @@ import { products } from "./db/product.db.js";
 import { QueryResolvers } from "./generated/graphql.js";
 
 export const queries: QueryResolvers = {
-  orders: (_parent, _args, context) => {
-    console.debug("Getting orders for user", context.username);
+  orders: (_parent, args) => {
+    console.debug("Getting orders for user", args.customerId);
 
-    return (
-      orders
-        // Use username from context to filter orders by customer
-        .filter((order) => order.customerId === context.username)
-    );
+    // Return only orders for given customer
+    return orders.filter((order) => order.customerId === args.customerId);
   },
-  order: (_parent, args, context) => {
+  order: (_parent, args) => {
     console.debug(
       "Getting order by id for user",
       args.orderId,
-      context.username
+      args.customerId
     );
 
     return (
       orders.find(
         (order) =>
-          order.customerId === context.username &&
-          order.orderId === args.orderId
+          order.customerId === args.customerId && order.orderId === args.orderId
       ) ?? null
     );
   },

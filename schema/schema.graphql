@@ -21,6 +21,6 @@ type Order {
 
 type Query {
   products: [Product!]!
-  orders: [Order!]!
-  order(orderId: ID!): Order
+  orders(customerId: ID!): [Order!]!
+  order(customerId: ID!, orderId: ID!): Order
 }

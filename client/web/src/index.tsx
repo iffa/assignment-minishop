@@ -8,7 +8,6 @@ import { Store } from "./Store";
 
 const gqlClient = new ApolloClient({
   uri: "http://localhost:4000",
-
   cache: new InMemoryCache(),
 });
 loadDevMessages();
