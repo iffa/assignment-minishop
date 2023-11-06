@@ -1,14 +1,16 @@
 import { Button, Card, Group, Image, Text, Title } from "@mantine/core";
+import { useCartContext } from "./cart/CartContext";
 
 type ProductCardProps = {
   name: string;
   ean: string;
   price: number;
   imageUrl: string;
-  readOnly?: boolean;
 };
 
 export function ProductCard(props: ProductCardProps) {
+  const { addToCart } = useCartContext();
+
   // Show human readable presentation of order total sum in summary
   const price = new Intl.NumberFormat([], {
     style: "currency",
@@ -28,7 +30,18 @@ export function ProductCard(props: ProductCardProps) {
       <Card.Section inheritPadding py="md">
         <Group justify="space-between">
           <Title order={3}>{props.name}</Title>
-          {!props.readOnly && <Button size="compact-sm">Add to cart</Button>}
+          <Button
+            size="compact-sm"
+            onClick={() =>
+              addToCart({
+                ean: props.ean,
+                name: props.name,
+                price: props.price,
+              })
+            }
+          >
+            Add to cart
+          </Button>
         </Group>
       </Card.Section>
       <Text>EAN: {props.ean}</Text>

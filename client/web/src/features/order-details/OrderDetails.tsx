@@ -1,47 +1,41 @@
-import { useQuery } from "@apollo/client";
-import { Text, Title } from "@mantine/core";
-import { useNavigate, useParams } from "react-router-dom";
-import { gql } from "../../../../generated";
-import { useAuthContext } from "../auth/AuthContext";
-
-const orderQuery = gql(`
-  query getOrder($customerId: ID!, $orderId: ID!) {
-    order(customerId: $customerId, orderId: $orderId) {
-      orderId
-      customerId
-      timestamp
-      products {
-        amount
-        ean
-        price
-      }
-      totalSum
-    }
-  }`);
+import { Box, Stack, Text, Title } from "@mantine/core";
+import { useSearchParams } from "react-router-dom";
+import { getFormattedCurrency } from "../../utils/get-formatted-currency";
+import { getFormattedTimestamp } from "../../utils/get-formatted-timestamp";
+import { OrderProductList } from "./OrderProductList";
+import { useOrderDetails } from "./use-order-details";
 
 export function OrderDetails() {
-  const navigate = useNavigate();
-  const { orderId } = useParams();
-  const { customerId } = useAuthContext();
-  const { loading, data } = useQuery(orderQuery, {
-    variables: { customerId, orderId: orderId! },
-    skip: !orderId,
-    onCompleted(data) {
-      // No data found for this order, possibly invalid, navigate to order summary page
-      if (!data.order) {
-        navigate("/orders");
-      }
-    },
-  });
+  const [searchParams] = useSearchParams();
+  const { loading, data } = useOrderDetails();
 
   return (
-    <>
-      <Title order={2}>Order details</Title>
+    <Stack gap="lg">
+      <Title order={2}>Order details: {data.orderId}</Title>
+      {searchParams.has("isNewOrder") && (
+        <Text fw="bold">Thank you for your order!</Text>
+      )}
       {loading ? (
         <Text>Loading order...</Text>
       ) : (
-        <pre>{JSON.stringify(data?.order, null, 2)}</pre>
+        <Stack gap="md">
+          <Box>
+            <Text>
+              Order time:{" "}
+              <Text span inherit fw="bold">
+                {getFormattedTimestamp(data.timestamp)}
+              </Text>
+            </Text>
+            <Text>
+              Total:{" "}
+              <Text span inherit fw="bold">
+                {getFormattedCurrency(data.totalSum)}
+              </Text>
+            </Text>
+          </Box>
+          <OrderProductList products={data.products} />
+        </Stack>
       )}
-    </>
+    </Stack>
   );
 }

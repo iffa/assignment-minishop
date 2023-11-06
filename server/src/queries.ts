@@ -6,8 +6,13 @@ export const queries: QueryResolvers = {
   orders: (_parent, args) => {
     console.debug("Getting orders for user", args.customerId);
 
-    // Return only orders for given customer
-    return orders.filter((order) => order.customerId === args.customerId);
+    return (
+      [...orders]
+        // Return only orders for given customer
+        .filter((order) => order.customerId === args.customerId)
+        // Sort by timestamp descending (latest first)
+        .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp))
+    );
   },
   order: (_parent, args) => {
     console.debug(
@@ -23,7 +28,15 @@ export const queries: QueryResolvers = {
       ) ?? null
     );
   },
-  products: () => {
-    return products;
+  products: (_parent, args) => {
+    console.debug("Getting available products", args.eans);
+
+    // Return all products as-is if no EAN listing provided to query
+    if (!args.eans) {
+      return products;
+    }
+
+    // Return filtered product set based on given EAN list
+    return products.filter((product) => args.eans?.includes(product.ean));
   },
 };

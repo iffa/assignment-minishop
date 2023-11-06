@@ -1,21 +1,10 @@
-import { useQuery } from "@apollo/client";
-import { SimpleGrid, Stack, Text, Title } from "@mantine/core";
-import { gql } from "../../../../generated";
+import { Group, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import { ProductCard } from "./ProductCard";
-
-const getProductsQuery = gql(`
-  query getProducts {
-    products {
-      ean
-      name
-      price
-      imageUrl
-    }
-  }
-`);
+import { Cart } from "./cart/Cart";
+import { useProducts } from "./use-products";
 
 export function Store() {
-  const { loading, data } = useQuery(getProductsQuery);
+  const { loading, data } = useProducts();
 
   const displayData = () => {
     if (!data) {
@@ -39,7 +28,10 @@ export function Store() {
 
   return (
     <Stack gap="lg">
-      <Title order={2}>Available products</Title>
+      <Group justify="space-between">
+        <Title order={2}>Available products</Title>
+        <Cart />
+      </Group>
       {loading ? <Text>Loading products...</Text> : displayData()}
     </Stack>
   );

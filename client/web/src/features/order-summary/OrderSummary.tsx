@@ -1,21 +1,14 @@
 import { Anchor, Card, Text, Title } from "@mantine/core";
 import { Link } from "react-router-dom";
 import { Order } from "../../../../generated/graphql";
+import { getFormattedCurrency } from "../../utils/get-formatted-currency";
+import { getFormattedTimestamp } from "../../utils/get-formatted-timestamp";
 
 type OrderSummaryProps = Pick<Order, "orderId" | "timestamp" | "totalSum">;
 
 export function OrderSummary(props: OrderSummaryProps) {
-  // Show human readable presentation of order timestamp in summary
-  const timestamp = new Intl.DateTimeFormat([], {
-    timeStyle: "short",
-    dateStyle: "medium",
-  }).format(Date.parse(props.timestamp));
-
-  // Show human readable presentation of order total sum in summary
-  const totalSum = new Intl.NumberFormat([], {
-    style: "currency",
-    currency: "EUR",
-  }).format(props.totalSum);
+  const timestamp = getFormattedTimestamp(props.timestamp);
+  const totalSum = getFormattedCurrency(props.totalSum);
 
   return (
     <Card withBorder>

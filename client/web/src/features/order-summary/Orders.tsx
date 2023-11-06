@@ -1,29 +1,9 @@
-import { useQuery } from "@apollo/client";
 import { Stack, Text, Title } from "@mantine/core";
-import { gql } from "../../../../generated";
-import { useAuthContext } from "../auth/AuthContext";
 import { OrderSummary } from "./OrderSummary";
-
-const ordersQuery = gql(`
-  query getOrders($customerId: ID!) {
-    orders(customerId: $customerId) {
-      orderId
-      customerId
-      timestamp
-      products {
-        amount
-        ean
-        price
-      }
-      totalSum
-    }
-  }`);
+import { useOrders } from "./use-orders";
 
 export function Orders() {
-  const { customerId } = useAuthContext();
-  const { loading, data } = useQuery(ordersQuery, {
-    variables: { customerId },
-  });
+  const { loading, data } = useOrders();
 
   return (
     <Stack gap="lg">

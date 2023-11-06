@@ -25,7 +25,7 @@ input CreateOrderProduct {
 }
 
 type Query {
-  products: [Product!]!
+  products(eans: [ID!]): [Product!]!
   orders(customerId: ID!): [Order!]!
   order(customerId: ID!, orderId: ID!): Order
 }

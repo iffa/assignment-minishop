@@ -2,7 +2,11 @@ import { GraphQLError } from "graphql";
 import { nanoid } from "nanoid";
 import { orders } from "./db/order.db.js";
 import { products } from "./db/product.db.js";
-import { MutationResolvers, Order } from "./generated/graphql.js";
+import {
+  MutationResolvers,
+  Order,
+  OrderedProduct,
+} from "./generated/graphql.js";
 
 export const mutations: MutationResolvers = {
   createOrder: (_parent, args) => {
@@ -33,7 +37,7 @@ export const mutations: MutationResolvers = {
         ...orderProduct,
         // Include current price as it may change in the future
         price: product.price,
-      };
+      } satisfies OrderedProduct;
     });
 
     const totalSum = orderProducts

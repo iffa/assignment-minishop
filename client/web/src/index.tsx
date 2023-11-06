@@ -1,6 +1,6 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -10,11 +10,13 @@ import { AuthProvider } from "./features/auth/AuthContext";
 import { OrderDetails } from "./features/order-details/OrderDetails";
 import { Orders } from "./features/order-summary/Orders";
 import { Store } from "./features/store/Store";
+import { CartProvider } from "./features/store/cart/CartContext";
 
-const gqlClient = new ApolloClient({
+export const gqlClient = new ApolloClient({
   uri: "http://localhost:4000",
   cache: new InMemoryCache(),
 });
+
 loadDevMessages();
 loadErrorMessages();
 
@@ -43,9 +45,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
       <ApolloProvider client={gqlClient}>
-        <MantineProvider>
-          <RouterProvider router={router} />
-        </MantineProvider>
+        <CartProvider>
+          <MantineProvider theme={createTheme({ primaryShade: 8 })}>
+            <RouterProvider router={router} />
+          </MantineProvider>
+        </CartProvider>
       </ApolloProvider>
     </AuthProvider>
   </React.StrictMode>

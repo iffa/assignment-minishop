@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, Title } from "@mantine/core";
+import { Anchor, AppShell, Burger, Group, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { AuthMenu } from "./features/auth/AuthMenu";
@@ -8,8 +8,16 @@ export function NavLinks() {
 
   return (
     <>
-      {location.pathname !== "/" && <Link to="/">Back to shop</Link>}
-      {location.pathname !== "/orders" && <Link to="/orders">My orders</Link>}
+      {location.pathname !== "/" && (
+        <Anchor component={Link} to="/">
+          Back to shop
+        </Anchor>
+      )}
+      {location.pathname !== "/orders" && (
+        <Anchor component={Link} to="/orders">
+          My orders
+        </Anchor>
+      )}
     </>
   );
 }
