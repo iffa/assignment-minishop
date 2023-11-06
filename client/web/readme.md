@@ -1,6 +1,6 @@
 # Ministore Web Client
 
-[React](https://react.dev/) client for Ministore Web. Uses [Parcel](https://parceljs.org/) for bundling
+[React](https://react.dev/) client for Ministore Web. Uses [Vite](https://vitejs.dev/) for bundling
 and development server, [React-router](https://reactrouter.com/en/main) for routing and
 [Apollo GraphQL](https://www.apollographql.com/docs/react/) client.
 
@@ -12,15 +12,24 @@ Start development:
 
 ```
   $ npm install
-  $ npm start
+  $ npm run dev
 ```
 
-Parcel development server should watch your changes as you work and apply changes immediately. If
-you can't see your changes, removing parcel cache with `rm -rf .parcel-cache`, restaring Parcel and
-reloading page may help. Parcel doesn't watch for GraphQL schema changes, see Generating GraphQL
-types below.
+Vite development server should watch your changes as you work and apply changes immediately.
+
+## Running tests
+
+Run Playwright tests with the following command:
+
+```
+  $ npm run test
+```
+
+Make sure you have backend & frontend running before attempting to run tests!
+In the real world we would configure Playwright to do this for us.
+
+You may need to perform `npx playwright install` first.
 
 ## Typechecking
 
-By default, Parcel doesn't do type checking and it hasn't been been enabled in this project. Find
-more at Parcel [documentation](https://parceljs.org/languages/typescript/).
+Strict typechecking with TypeScript has been configured, in addition to type-safe ESLint configuration.

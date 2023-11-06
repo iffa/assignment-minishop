@@ -8,9 +8,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "npx eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "npx playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.39.0",
     "@types/node": "^20.8.10",
     "@types/react": "^18.2.35",
     "@types/react-dom": "^18.2.14",

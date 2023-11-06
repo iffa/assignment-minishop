@@ -18,7 +18,7 @@ export function ProductCard(props: ProductCardProps) {
   }).format(props.price);
 
   return (
-    <Card withBorder>
+    <Card withBorder data-product-ean={props.ean}>
       <Card.Section withBorder>
         <Image
           alt="Product image"
