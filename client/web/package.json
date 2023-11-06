@@ -1,16 +1,25 @@
 {
   "name": "minishop-client",
   "version": "1.0.0",
+  "private": true,
   "description": "",
-  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "type": "module",
   "scripts": {
-    "start": "parcel src/index.html",
-    "build": "parcel build"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "npx eslint .",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "@types/react": "18.2.21",
-    "parcel": "2.9.3",
-    "process": "0.11.10"
+    "@types/node": "^20.8.10",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.14",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "@vitejs/plugin-react": "^4.1.1",
+    "eslint": "^8.53.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0"
   },
   "dependencies": {
     "@apollo/client": "3.8.1",

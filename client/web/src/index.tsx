@@ -1,11 +1,10 @@
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { loadDevMessages, loadErrorMessages } from "@apollo/client/dev";
 import React from "react";
-
-import { createRoot } from "react-dom/client";
-import { Store } from "./Store";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Orders } from "./Orders";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import { Store } from "./Store";
 
 const gqlClient = new ApolloClient({
   uri: "http://localhost:4000",
@@ -26,10 +25,10 @@ const router = createBrowserRouter([
   },
 ]);
 
-const container = document.getElementById("app");
-const root = createRoot(container);
-root.render(
-  <ApolloProvider client={gqlClient}>
-    <RouterProvider router={router} />
-  </ApolloProvider>
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <ApolloProvider client={gqlClient}>
+      <RouterProvider router={router} />
+    </ApolloProvider>
+  </React.StrictMode>
 );
