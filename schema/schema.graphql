@@ -8,6 +8,7 @@ type Product {
 type OrderedProduct {
   ean: String!
   amount: Int!
+  price: Float!
 }
 
 type Order {
@@ -15,10 +16,11 @@ type Order {
   timestamp: String!
   customerId: String!
   products: [OrderedProduct!]!
-  totalSum: Int!
+  totalSum: Float!
 }
 
 type Query {
   products: [Product!]!
-  orders(customerId: ID!): [Order!]!
+  orders: [Order!]!
+  order(orderId: ID!): Order
 }

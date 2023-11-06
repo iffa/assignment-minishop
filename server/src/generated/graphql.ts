@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { Context } from '../context.js';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -22,13 +23,14 @@ export type Order = {
   orderId: Scalars['ID']['output'];
   products: Array<OrderedProduct>;
   timestamp: Scalars['String']['output'];
-  totalSum: Scalars['Int']['output'];
+  totalSum: Scalars['Float']['output'];
 };
 
 export type OrderedProduct = {
   __typename?: 'OrderedProduct';
   amount: Scalars['Int']['output'];
   ean: Scalars['String']['output'];
+  price: Scalars['Float']['output'];
 };
 
 export type Product = {
@@ -41,13 +43,14 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
+  order?: Maybe<Order>;
   orders: Array<Order>;
   products: Array<Product>;
 };
 
 
-export type QueryOrdersArgs = {
-  customerId: Scalars['ID']['input'];
+export type QueryOrderArgs = {
+  orderId: Scalars['ID']['input'];
 };
 
 
@@ -145,22 +148,23 @@ export type ResolversParentTypes = {
   String: Scalars['String']['output'];
 };
 
-export type OrderResolvers<ContextType = any, ParentType extends ResolversParentTypes['Order'] = ResolversParentTypes['Order']> = {
+export type OrderResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Order'] = ResolversParentTypes['Order']> = {
   customerId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   orderId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   products?: Resolver<Array<ResolversTypes['OrderedProduct']>, ParentType, ContextType>;
   timestamp?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  totalSum?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  totalSum?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type OrderedProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['OrderedProduct'] = ResolversParentTypes['OrderedProduct']> = {
+export type OrderedProductResolvers<ContextType = Context, ParentType extends ResolversParentTypes['OrderedProduct'] = ResolversParentTypes['OrderedProduct']> = {
   amount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   ean?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  price?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
+export type ProductResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
   ean?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   imageUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -168,12 +172,13 @@ export type ProductResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  orders?: Resolver<Array<ResolversTypes['Order']>, ParentType, ContextType, RequireFields<QueryOrdersArgs, 'customerId'>>;
+export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  order?: Resolver<Maybe<ResolversTypes['Order']>, ParentType, ContextType, RequireFields<QueryOrderArgs, 'orderId'>>;
+  orders?: Resolver<Array<ResolversTypes['Order']>, ParentType, ContextType>;
   products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType>;
 };
 
-export type Resolvers<ContextType = any> = {
+export type Resolvers<ContextType = Context> = {
   Order?: OrderResolvers<ContextType>;
   OrderedProduct?: OrderedProductResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;

@@ -1,4 +1,4 @@
-import { Product } from "./generated/graphql";
+import { Product } from "../generated/graphql";
 
 export const products: Product[] = [
   {

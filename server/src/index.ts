@@ -6,7 +6,9 @@ import { readFileSync } from "fs";
 import { Resolvers } from "./generated/graphql.js";
 import { queries } from "./queries.js";
 
-const typeDefs = readFileSync("../schema/schema.graphql", { encoding: "utf-8" });
+const typeDefs = readFileSync("../schema/schema.graphql", {
+  encoding: "utf-8",
+});
 
 // Resolvers define how to fetch the types defined in your schema.
 const resolvers: Resolvers = {
@@ -26,6 +28,13 @@ const server = new ApolloServer({
 //  3. prepares your app to handle incoming requests
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 },
+  context: ({ req }) =>
+    Promise.resolve({
+      // We should perform actual authentication, but
+      // let's assume we can trust the client to give their username
+      // Add username to context so that query resolvers can use username for request handling
+      username: req.headersDistinct.authorization?.at(0),
+    }),
 });
 
 console.log(`🚀  Server ready at: ${url}`);
