@@ -1,4 +1,4 @@
-import { Group, GroupProps, Select, Text } from "@mantine/core";
+import { Group, GroupProps, NativeSelect, Text } from "@mantine/core";
 import { useAuthContext } from "./AuthContext";
 
 export function AuthMenu(props: Partial<GroupProps>) {
@@ -7,20 +7,14 @@ export function AuthMenu(props: Partial<GroupProps>) {
   return (
     <Group {...props}>
       <Text size="sm">Signed in as:</Text>
-      <Select
+      <NativeSelect
+        aria-label="Select current user"
         id="userSelect"
-        clearable={false}
-        allowDeselect={false}
         data={["customer-1", "customer-2", "customer-3"]}
         value={customerId}
         onChange={(value) => {
-          // Invalid selection, do nothing
-          if (!value) {
-            return;
-          }
-
           // Update auth context
-          setCustomerId(value);
+          setCustomerId(value.currentTarget.value);
         }}
       />
     </Group>

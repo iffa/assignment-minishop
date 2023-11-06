@@ -12,12 +12,12 @@ export function OrderDetails() {
   return (
     <Stack gap="lg">
       <Title order={2}>Order details: {data.orderId}</Title>
+      {/* Display "thanks for your order" if this is a new order (isNewOrder search param set) */}
       {searchParams.has("isNewOrder") && (
         <Text fw="bold">Thank you for your order!</Text>
       )}
-      {loading ? (
-        <Text>Loading order...</Text>
-      ) : (
+      {loading && <Text>Loading order...</Text>}
+      {data && (
         <Stack gap="md">
           <Box>
             <Text>

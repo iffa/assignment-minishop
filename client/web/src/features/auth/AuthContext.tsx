@@ -5,13 +5,10 @@ type AuthContextType = {
   setCustomerId: (customerId: string) => void;
 };
 
-const AuthContext = createContext<AuthContextType>({
-  customerId: "customer-1",
-  setCustomerId: () => null,
-});
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 /**
- * Provides auth context to the application.
+ * Provides "auth" context to the application.
  */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [customerId, setCustomerId] = useState("customer-1");

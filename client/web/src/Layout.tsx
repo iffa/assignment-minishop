@@ -53,7 +53,7 @@ export function Layout() {
         </Group>
       </AppShell.Header>
       <AppShell.Navbar px="md" py="md">
-        <AuthMenu />
+        {opened && <AuthMenu />}
         <NavLinks />
       </AppShell.Navbar>
       <AppShell.Main>
