@@ -10,6 +10,12 @@ import {
 
 export const mutations: MutationResolvers = {
   createOrder: (_parent, args) => {
+    console.debug(
+      "Creating order for customer with products",
+      args.customerId,
+      args.products
+    );
+
     const orderProducts = args.products.map((orderProduct) => {
       const product = products.find(
         (product) => product.ean === orderProduct.ean
